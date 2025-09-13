@@ -36,6 +36,7 @@ public class ActivityService {
         responce.setAdditionalMatrics(activity.getAdditionalMatrics());
         responce.setStartTime(activity.getStartTime());
         responce.setUserId(activity.getUserId());
+        responce.setUpdatedAt(activity.getUpdatedAt());
 
         return responce;
     }
