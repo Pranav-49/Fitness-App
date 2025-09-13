@@ -20,4 +20,10 @@ public class UserController {
     {
         return ResponseEntity.ok(userService.register(request));
     }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserResponse> getUserProfile(@PathVariable String userId)
+    {
+        return ResponseEntity.ok(userService.getUserProfile(userId));
+    }
 }
