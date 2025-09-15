@@ -4,15 +4,24 @@ import com.pranav.activityService.dto.ActivityRequest;
 import com.pranav.activityService.dto.ActivityResponce;
 import com.pranav.activityService.model.Activity;
 import com.pranav.activityService.repository.ActivityRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class ActivityService {
-    @Autowired
-    private ActivityRepository activityRepository;
+    private final ActivityRepository activityRepository;
+    private final UserValidationService userValidationService;
 
     public ActivityResponce trackActivity(ActivityRequest activityRequest) {
+
+        boolean isValidUser = userValidationService.validateUser(activityRequest.getUserId());
+
+        if(!isValidUser)
+        {
+            throw new RuntimeException("Invalid User"+activityRequest.getUserId());
+        }
+
         Activity activity = Activity.builder()
                 .userId(activityRequest.getUserId())
                 .type(activityRequest.getType())
