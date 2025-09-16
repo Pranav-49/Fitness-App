@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientException;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +21,7 @@ public class UserValidationService {
                         .block();
 
                 return Boolean.TRUE.equals(isValid);
-        }catch (WebClientException e)
+        }catch (WebClientResponseException e)
         {
             e.printStackTrace();
         }
