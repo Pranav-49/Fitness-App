@@ -5,6 +5,7 @@ import com.pranav.activityService.dto.ActivityResponce;
 import com.pranav.activityService.model.Activity;
 import com.pranav.activityService.repository.ActivityRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 public class ActivityService {
     private final ActivityRepository activityRepository;
     private final UserValidationService userValidationService;
+    private final KafkaTemplate<String,Activity> kafkaTemplate;
+    private String topicName = "kafka.topic.name";
 
     public ActivityResponce trackActivity(ActivityRequest activityRequest) {
 
@@ -32,6 +35,13 @@ public class ActivityService {
                 .build();
 
         Activity savedActivity = activityRepository.save(activity);
+
+        try {
+            kafkaTemplate.send(topicName,savedActivity.getUserId(),activity);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         return mapToResponce(savedActivity);
     }
 
