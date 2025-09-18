@@ -14,7 +14,7 @@ public class ActivityService {
     private final ActivityRepository activityRepository;
     private final UserValidationService userValidationService;
     private final KafkaTemplate<String,Activity> kafkaTemplate;
-    private String topicName = "kafka.topic.name";
+    private String topicName = "activity-events";
 
     public ActivityResponce trackActivity(ActivityRequest activityRequest) {
 

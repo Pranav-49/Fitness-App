@@ -1,24 +1,59 @@
 package com.pranav.AIFitnessService.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pranav.AIFitnessService.model.Activity;
-import lombok.Data;
+import com.pranav.AIFitnessService.model.Recommendation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-@Data
+@RequiredArgsConstructor
 public class ActivityAIService {
-    @Autowired
     private final GeminiService geminiService;
 
-    public void generateRecommendation(Activity activity)
+    public Recommendation generateRecommendation(Activity activity)
     {
         String prompt = createPromptForActivity(activity);
-        log.info("RESPONCE FROM AI : {}",geminiService.getRecommendation(prompt));
+        String aiResponce = geminiService.getRecommendation(prompt);
+        log.info("RESPONCE FROM AI : {}",aiResponce);
+        return processAiResponse(activity,aiResponce);
     }
+
+    private Recommendation processAiResponse(Activity activity, String aiResponse) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode rootNode = mapper.readTree(aiResponse);
+
+            JsonNode candidatesNode = rootNode.path("candidates");
+            if (!candidatesNode.isArray() || candidatesNode.isEmpty()) {
+                log.warn("No candidates found in AI response.");
+                return null;
+            }
+
+            JsonNode partsNode = candidatesNode.get(0).path("content").get("parts");
+            if (!partsNode.isArray() || partsNode.isEmpty()) {
+                log.warn("No parts found in AI response.");
+                return null;
+            }
+
+            String text = partsNode.get(0).path("text").asText()
+                    .replaceAll("```json\\n","")
+                    .replaceAll("\\n```","")
+                    .trim();
+
+            log.info("RESPONCE FROM CLEANEDAI : {}", text);
+
+        } catch (Exception e) {
+            log.error("Error processing AI response", e);
+            return null;
+        }
+
+        return null;
+    }
+
 
     private String createPromptForActivity(Activity activity) {
         return String.format("""
