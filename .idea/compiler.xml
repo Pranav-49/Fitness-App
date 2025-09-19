@@ -6,8 +6,10 @@
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
         <module name="activityService" />
         <module name="eurekaServer" />
+        <module name="configServer" />
         <module name="userService" />
       </profile>
       <profile name="Annotation profile for AIFitnessService" enabled="true">
@@ -25,6 +27,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="AIFitnessService" options="-parameters" />
       <module name="activityService" options="-parameters" />
+      <module name="configServer" options="-parameters" />
       <module name="eurekaServer" options="-parameters" />
       <module name="userService" options="-parameters" />
     </option>
