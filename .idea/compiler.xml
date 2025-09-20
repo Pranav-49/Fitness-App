@@ -10,6 +10,7 @@
         <module name="activityService" />
         <module name="eurekaServer" />
         <module name="configServer" />
+        <module name="gateway" />
         <module name="userService" />
       </profile>
       <profile name="Annotation profile for AIFitnessService" enabled="true">
@@ -29,6 +30,7 @@
       <module name="activityService" options="-parameters" />
       <module name="configServer" options="-parameters" />
       <module name="eurekaServer" options="-parameters" />
+      <module name="gateway" options="-parameters" />
       <module name="userService" options="-parameters" />
     </option>
   </component>
