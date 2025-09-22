@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pranav.AIFitnessService.model.Activity;
 import com.pranav.AIFitnessService.model.Recommendation;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,9 +24,9 @@ public class ActivityAIService {
     public Recommendation generateRecommendation(Activity activity)
     {
         String prompt = createPromptForActivity(activity);
-        String aiResponce = geminiService.getRecommendation(prompt);
-        log.info("RESPONCE FROM AI : {}",aiResponce);
-        return processAiResponse(activity,aiResponce);
+        String aiResponse = geminiService.getRecommendation(prompt);
+        log.info("RESPONCE FROM AI : {}",aiResponse);
+        return processAiResponse(activity,aiResponse);
     }
 
     private Recommendation processAiResponse(Activity activity, String aiResponse) {

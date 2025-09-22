@@ -3,6 +3,8 @@ package com.pranav.AIFitnessService.service;
 import com.pranav.AIFitnessService.model.Activity;
 import com.pranav.AIFitnessService.model.Recommendation;
 import com.pranav.AIFitnessService.repository.RecommendationRepository;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
