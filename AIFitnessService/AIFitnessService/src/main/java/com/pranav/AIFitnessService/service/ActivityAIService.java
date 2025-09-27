@@ -4,11 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pranav.AIFitnessService.model.Activity;
 import com.pranav.AIFitnessService.model.Recommendation;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,7 +49,7 @@ public class ActivityAIService {
                     .replaceAll("\\n```","")
                     .trim();
 
-//            log.info("RESPONCE FROM CLEANEDAI : {}", text);
+            log.info("RESPONCE FROM CLEANEDAI : {}", text);
             JsonNode analysisJson = mapper.readTree(text);
             JsonNode analysisNode = analysisJson.path("analysis");
 
